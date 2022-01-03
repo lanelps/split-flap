@@ -13,3 +13,17 @@ body {
   margin: 0;
   padding: 0;
 }
+
+#board {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: content-box;
+}
+
+.pixel {
+  position: absolute;
+  /* border: 1px solid rgb(34, 34, 34); */
+  font-size: 16px;
+  text-align: center;
+}
