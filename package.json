@@ -1,0 +1,14 @@
+{
+  "name": "split-flap",
+  "version": "1.0.0",
+  "private": "true",
+  "author": "Lane Le Prevost-Smith <lanelps@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "webpack"
+  },
+  "devDependencies": {
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1"
+  }
+}
