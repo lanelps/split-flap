@@ -3,6 +3,22 @@ import './styles/main.css';
 const PIXEL_WIDTH = 9.63;
 const PIXEL_HEIGHT = 16;
 
+let bodyMouseDown = false;
+
+function eventListeners() {
+  const body = document.querySelector('body');
+
+  body.addEventListener('mousedown', e => {
+    e.preventDefault();
+    bodyMouseDown = true;
+  });
+
+  body.addEventListener('mouseup', e => {
+    e.preventDefault();
+    bodyMouseDown = false;
+  });
+}
+
 function initialiseBoard() {
   const board = document.createElement('div');
   board.setAttribute('id', 'board');
@@ -21,7 +37,18 @@ function initialiseBoard() {
       width: ${PIXEL_WIDTH}px;
       height: ${PIXEL_HEIGHT}px;
       `;
-      pixel.innerText = `0`;
+      pixel.innerText = `*`;
+
+      pixel.addEventListener('mousedown', () => {
+        pixel.style.backgroundColor = `#000`;
+      });
+
+      pixel.addEventListener('mouseover', () => {
+        if (bodyMouseDown) {
+          pixel.style.backgroundColor = `#000`;
+        }
+      });
+
       board.appendChild(pixel);
     }
   }
@@ -30,9 +57,12 @@ function initialiseBoard() {
 function main() {
   if (typeof window !== 'undefined') {
     window.addEventListener('DOMContentLoaded', () => {
+      eventListeners();
       initialiseBoard();
     });
   }
 }
 
 main();
+
+// if the body is moused down then and individual pixel mouseover function should be listening
