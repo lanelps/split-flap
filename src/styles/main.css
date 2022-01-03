@@ -1,0 +1,15 @@
+@font-face {
+  font-family: 'Menlo';
+  src: url('../../assets/fonts/menlo.otf') format('opentype');
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Menlo', monospace;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
