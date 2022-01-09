@@ -3,7 +3,6 @@ import './styles/main.css';
 const PIXEL_WIDTH = 9.63;
 const PIXEL_HEIGHT = 16;
 
-// let bodyMouseDown = false;
 function colorShuffle(pixel) {
   const max = 255;
   const r = Math.floor(Math.random() * max);
@@ -19,6 +18,33 @@ function textShuffle(pixel) {
   pixel.innerText = charArray[Math.floor(Math.random() * charArray.length)];
 }
 
+function splitFlap(pixel) {
+  const initialCharacter = pixel.innerText;
+
+  const characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`;
+  const charArray = characters.split(``);
+
+  let loopCounter = 0;
+
+  const sliptLoop = () => {
+    const timeout = setTimeout(() => {
+      if (loopCounter < 10) {
+        pixel.innerText =
+          charArray[Math.floor(Math.random() * charArray.length)];
+        loopCounter++;
+        pixel.style.color = colorShuffle(pixel);
+        sliptLoop();
+      } else {
+        pixel.innerText = initialCharacter;
+        pixel.style.color = `#fff`;
+        clearTimeout(timeout);
+      }
+    }, 100);
+  };
+
+  sliptLoop();
+}
+
 function redrawBoard() {
   const board = document.querySelector(`#board`);
 
@@ -32,8 +58,6 @@ function redrawBoard() {
 function windowResize() {
   const resizeObserver = new ResizeObserver(entries => {
     for (let entry of entries) {
-      console.log(`entry`, entry);
-      console.log(`board redraw`);
       redrawBoard();
     }
   });
@@ -41,17 +65,7 @@ function windowResize() {
   resizeObserver.observe(document.querySelector(`body`));
 }
 
-function eventListeners() {
-  // const body = document.querySelector('body');
-  // body.addEventListener('mousedown', e => {
-  //   e.preventDefault();
-  //   bodyMouseDown = true;
-  // });
-  // body.addEventListener('mouseup', e => {
-  //   e.preventDefault();
-  //   bodyMouseDown = false;
-  // });
-}
+function eventListeners() {}
 
 function drawGrid() {
   const boardWidth = Math.floor(board.clientWidth / PIXEL_WIDTH);
@@ -66,25 +80,14 @@ function drawGrid() {
       top: ${i * PIXEL_HEIGHT}px;
       width: ${PIXEL_WIDTH}px;
       height: ${PIXEL_HEIGHT}px;
+      color: #fff;
       `;
-      textShuffle(pixel);
-      colorShuffle(pixel);
-      // pixel.innerText = `*`;
+      pixel.innerText = `*`;
+      // textShuffle(pixel);
 
-      // pixel.addEventListener('mousedown', () => {
-      //   pixel.style.backgroundColor = `#000`;
-      // });
-
-      // pixel.addEventListener('mouseover', () => {
-      //   if (bodyMouseDown) {
-      //     pixel.style.backgroundColor = `#000`;
-      //   }
-      // });
-
-      // pixel.addEventListener('mouseover', () => {
-      //   textShuffle(pixel);
-      //   colorShuffle(pixel);
-      // });
+      pixel.addEventListener('mouseover', () => {
+        splitFlap(pixel);
+      });
 
       board.appendChild(pixel);
     }
