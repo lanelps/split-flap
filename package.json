@@ -10,6 +10,7 @@
     "dev": "webpack serve --open"
   },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.16.8",
     "css-loader": "^6.5.1",
     "style-loader": "^3.3.1",
     "webpack": "^5.65.0",
@@ -19,6 +20,7 @@
   "dependencies": {
     "@babel/core": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
+    "@babel/runtime": "^7.16.7",
     "babel-loader": "^8.2.3"
   }
 }

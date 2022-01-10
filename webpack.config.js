@@ -9,6 +9,7 @@ module.exports = {
     assetModuleFilename: '[name][ext]',
     clean: true
   },
+  target: [`web`, `es5`],
   module: {
     rules: [
       {
@@ -17,7 +18,8 @@ module.exports = {
         use: {
           loader: `babel-loader`,
           options: {
-            presets: [`@babel/preset-env`]
+            presets: [`@babel/preset-env`],
+            plugins: [`@babel/transform-runtime`]
           }
         }
       },
