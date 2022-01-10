@@ -19,7 +19,8 @@ function textShuffle(pixel) {
 }
 
 function splitFlap(pixel) {
-  const initialCharacter = pixel.innerText;
+  const initialText = pixel.innerText;
+  const initialColor = pixel.style.color;
 
   const characters = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`;
   const charArray = characters.split(``);
@@ -35,8 +36,8 @@ function splitFlap(pixel) {
         pixel.style.color = colorShuffle(pixel);
         sliptLoop();
       } else {
-        pixel.innerText = initialCharacter;
-        pixel.style.color = `#fff`;
+        pixel.innerText = initialText;
+        pixel.style.color = initialColor;
         clearTimeout(timeout);
       }
     }, 100);
@@ -80,7 +81,7 @@ function drawGrid() {
       top: ${i * PIXEL_HEIGHT}px;
       width: ${PIXEL_WIDTH}px;
       height: ${PIXEL_HEIGHT}px;
-      color: #fff;
+      color: #000;
       `;
       pixel.innerText = `*`;
       // textShuffle(pixel);
