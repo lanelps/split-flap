@@ -1,6 +1,6 @@
-import textJson from './data/text.json';
+import textJson from "./data/text.json";
 
-import './styles/main.css';
+import "./styles/main.css";
 
 function colorShuffle(pixel) {
   const max = 255;
@@ -18,20 +18,26 @@ function splitFlap(element) {
 
   let loopCounter = 0;
 
-  const sliptLoop = () => {
+  const splitLoop = () => {
+    const mouseListener = async (e) => {
+      element.removeEventListener(`mouseover`, mouseListener);
+      splitFlap(element);
+    };
+
     const timeout = setTimeout(() => {
       if (loopCounter < charArray.length) {
         element.innerText = charArray[loopCounter];
         loopCounter++;
-        // sliptLoop();
+        splitLoop();
       } else {
         element.innerText = initialText;
         clearTimeout(timeout);
+        element.addEventListener(`mouseover`, mouseListener);
       }
     }, 100);
   };
 
-  sliptLoop();
+  splitLoop();
 }
 
 function splitFlapRandom(element) {
@@ -45,7 +51,7 @@ function splitFlapRandom(element) {
   let loopCounter = 0;
 
   const splitLoop = () => {
-    const mouseListener = async e => {
+    const mouseListener = async (e) => {
       element.removeEventListener(`mouseover`, mouseListener);
       splitFlapRandom(element);
     };
@@ -69,18 +75,19 @@ function splitFlapRandom(element) {
 
 function createSplitFlapElement(type, text) {
   const element = document.createElement(type);
+  const textChars = text.split(``);
 
-  const textChars = text.split('');
-  textChars.forEach(char => {
+  textChars.forEach((char) => {
     const charElement = document.createElement(`span`);
     charElement.innerText = char;
 
-    const mouseListener = async e => {
-      charElement.removeEventListener(`mouseover`, mouseListener);
-      splitFlapRandom(charElement);
+    const onMouseOver = async (e) => {
+      charElement.removeEventListener(`mouseover`, onMouseOver);
+      splitFlap(charElement);
+      // splitFlapRandom(charElement);
     };
 
-    charElement.addEventListener(`mouseover`, mouseListener);
+    charElement.addEventListener(`mouseover`, onMouseOver);
 
     element.appendChild(charElement);
   });
@@ -91,24 +98,24 @@ function createSplitFlapElement(type, text) {
 function eventListeners() {}
 
 function init() {
-  const heading = createSplitFlapElement(`h1`, `HELLO; World;`);
-  const sentence = createSplitFlapElement(
-    `p`,
-    `Tēnā koutou, tēnā koutou, tēnā koutou katoa`
-  );
-
-  textJson.lorem.forEach(text => {
-    const para = createSplitFlapElement(`p`, text);
-    document.body.appendChild(para);
-  });
+  // const heading = createSplitFlapElement(`h1`, `HELLO; World;`);
+  // const sentence = createSplitFlapElement(
+  //   `p`,
+  //   `Tēnā koutou, tēnā koutou, tēnā koutou katoa`
+  // );
 
   // document.body.appendChild(heading);
   // document.body.appendChild(sentence);
+
+  textJson.paragraphs.forEach((text) => {
+    const para = createSplitFlapElement(`p`, text);
+    document.body.appendChild(para);
+  });
 }
 
 function main() {
-  if (typeof window !== 'undefined') {
-    window.addEventListener('DOMContentLoaded', () => {
+  if (typeof window !== "undefined") {
+    window.addEventListener("DOMContentLoaded", () => {
       init();
       eventListeners();
     });
